@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <div class="row">
-      <div class="col-8 offset-2">
+      <div class="col-12 col-md-10 col-lg-8 offset-2">
         <h1 class="text-center">User Information Form</h1>
         <form @submit.prevent="submitForm">
           <div class="row mb-3">
@@ -116,5 +116,20 @@ const submitForm = () => {
 }
 .list-group-item {
   padding: 10px;
+}
+
+.container {
+  min-width: 320px;
+}
+
+@media (min-width: 992px) {
+  .container {
+    min-width: 800px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    min-width: 1000px; /* 保证在超大屏幕上不会太窄 */
+  }
 }
 </style>
