@@ -73,6 +73,13 @@
             <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
           </div>
         </form>
+        <DataTable :value="users">
+          <Column field="username" header="Username"></Column>
+          <Column field="password" header="Password"></Column>
+          <Column field="gender" header="Gender"></Column>
+          <Column field="isAustralian" header="Australian Resident?"></Column>
+          <Column field="reason" header="Reason for joining"></Column>
+        </DataTable>
         <div class="row mt-5" v-if="submittedCards.length">
           <div class="d-flex flex-wrap justify-content-start">
             <div
@@ -101,15 +108,17 @@
 
 <script setup>
 // Our logic will go here
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
-const formData = ref({
+const formData = reactive({
   username: '',
   password: '',
   isAustralian: false,
   reason: '',
   gender: ''
 })
+
+const users = ref([])
 
 const submittedCards = ref([])
 
@@ -124,7 +133,13 @@ const submitForm = () => {
     !errors.value.gender &&
     !errors.value.reason
   ) {
-    submittedCards.value.push({ ...formData.value })
+    submittedCards.value.push({
+      username: formData.username,
+      password: formData.password,
+      gender: formData.gender,
+      isAustralian: formData.isAustralian,
+      reason: formData.reason
+    })
     clearForm()
   }
 }
