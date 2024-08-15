@@ -80,7 +80,7 @@
           <Column field="isAustralian" header="Australian Resident?"></Column>
           <Column field="reason" header="Reason for joining"></Column>
         </DataTable>
-        <div class="row mt-5" v-if="submittedCards.length">
+        <!-- <div class="row mt-5" v-if="submittedCards.length">
           <div class="d-flex flex-wrap justify-content-start">
             <div
               v-for="(card, index) in submittedCards"
@@ -99,8 +99,8 @@
                 <li class="list-group-item">Reason: {{ card.reason }}</li>
               </ul>
             </div>
-          </div>
-        </div>
+          </div> -->
+        <!-- </div> -->
       </div>
     </div>
   </div>
