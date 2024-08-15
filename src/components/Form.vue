@@ -73,7 +73,7 @@
             <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
           </div>
         </form>
-        <DataTable :value="users">
+        <DataTable :value="submittedCards">
           <Column field="username" header="Username"></Column>
           <Column field="password" header="Password"></Column>
           <Column field="gender" header="Gender"></Column>
@@ -109,8 +109,10 @@
 <script setup>
 // Our logic will go here
 import { reactive, ref } from 'vue'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 
-const formData = reactive({
+const formData = ref({
   username: '',
   password: '',
   isAustralian: false,
@@ -118,15 +120,14 @@ const formData = reactive({
   gender: ''
 })
 
-const users = ref([])
-
 const submittedCards = ref([])
 
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
-  validateGender(true)
-  validateReason(true)
+  validateGender()
+  validateReason()
+
   if (
     !errors.value.username &&
     !errors.value.password &&
@@ -134,11 +135,11 @@ const submitForm = () => {
     !errors.value.reason
   ) {
     submittedCards.value.push({
-      username: formData.username,
-      password: formData.password,
-      gender: formData.gender,
-      isAustralian: formData.isAustralian,
-      reason: formData.reason
+      username: formData.value.username,
+      password: formData.value.password,
+      gender: formData.value.gender,
+      isAustralian: formData.value.isAustralian,
+      reason: formData.value.reason
     })
     clearForm()
   }
@@ -154,6 +155,7 @@ const clearForm = () => {
   }
 }
 
+// Initialize errors
 const errors = ref({
   username: null,
   password: null,
@@ -236,7 +238,7 @@ const validateReason = () => {
 }
 @media (min-width: 1200px) {
   .container {
-    min-width: 1000px; /* 保证在超大屏幕上不会太窄 */
+    min-width: 1000px;
   }
 }
 </style>
