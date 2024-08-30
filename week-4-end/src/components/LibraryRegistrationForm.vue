@@ -18,9 +18,11 @@ const submitForm = () => {
   validateName(true)
   validatePassword(true)
   validateConfirmPassword(true)
+  validateReason(true)
   if (!errors.value.username 
     && !errors.value.password
-    && !errors.value.confirmPassword) {
+    && !errors.value.confirmPassword
+    && ! errors.value.reason) {
     submittedCards.value.push({ ...formData.value })
     clearForm()
   }
@@ -88,6 +90,21 @@ const validateConfirmPassword = (blur) => {
     errors.value.confirmPassword = null
   }
 }
+
+const validateReason = (blur) => {
+  if (formData.value.reason.length < 10) {
+    if (blur) errors.value.reason = 'Reason must be at least 10 characters'
+  } else {
+    errors.value.reason = null
+  }
+
+  if (formData.value.reason.includes('friend')) {
+    if (blur) errors.value.friendMessage = 'Great to have a friend'
+  } else {
+    errors.value.friendMessage = null
+  }
+}
+
 </script>
 
 <template>
@@ -170,8 +187,12 @@ const validateConfirmPassword = (blur) => {
               class="form-control"
               id="reason"
               rows="3"
+              @blur="() => validateReason(true)"
+              @input="() => validateReason(false)"
               v-model="formData.reason"
             ></textarea>
+            <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
+            <div v-if="errors.friendMessage" style="color: green;">{{ errors.friendMessage }}</div>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary me-2">Submit</button>
