@@ -6,6 +6,7 @@ import Column from 'primevue/column'
 const formData = ref({
   username: '',
   password: '',
+  confirmPassword: '',
   isAustralian: false,
   reason: '',
   gender: ''
@@ -16,7 +17,10 @@ const submittedCards = ref([])
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
-  if (!errors.value.username && !errors.value.password) {
+  validateConfirmPassword(true)
+  if (!errors.value.username 
+    && !errors.value.password
+    && !errors.value.confirmPassword) {
     submittedCards.value.push({ ...formData.value })
     clearForm()
   }
@@ -26,6 +30,7 @@ const clearForm = () => {
   formData.value = {
     username: '',
     password: '',
+    confirmPassword: '',
     isAustralian: false,
     reason: '',
     gender: ''
@@ -35,6 +40,7 @@ const clearForm = () => {
 const errors = ref({
   username: null,
   password: null,
+  confirmPassword: null,
   resident: null,
   gender: null,
   reason: null
@@ -70,6 +76,18 @@ const validatePassword = (blur) => {
     errors.value.password = null
   }
 }
+
+/**
+ * Confirm password validation function that checks if the password and confirm password fields match.
+ * @param blur: boolean - If true, the function will display an error message if the passwords do not match.
+ */
+const validateConfirmPassword = (blur) => {
+  if (formData.value.password !== formData.value.confirmPassword) {
+    if (blur) errors.value.confirmPassword = 'Passwords do not match.'
+  } else {
+    errors.value.confirmPassword = null
+  }
+}
 </script>
 
 <template>
@@ -97,16 +115,15 @@ const validatePassword = (blur) => {
               <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
             </div>
             <div class="col-md-6 col-sm-6">
-  <label for="confirm-password" class="form-label">Confirm password</label>
-  <input
-    type="password"
-    class="form-control"
-    id="confirm-password"
-    v-model="formData.confirmPassword"
-  />
-  <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
-</div>
-
+              <label for="gender" class="form-label">Gender</label>
+              <select class="form-select" id="gender" v-model="formData.gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
             <div class="col-md-6 col-sm-6">
               <label for="password" class="form-label">Password</label>
               <input
@@ -118,6 +135,19 @@ const validatePassword = (blur) => {
                 v-model="formData.password"
               />
               <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <label for="confirm-password" class="form-label">Confirm password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirm-password"
+                v-model="formData.confirmPassword"
+                @blur="() => validateConfirmPassword(true)"
+              />
+              <div v-if="errors.confirmPassword" class="text-danger">
+                {{ errors.confirmPassword }}
+              </div>
             </div>
           </div>
           <div class="row mb-3">
@@ -132,14 +162,7 @@ const validatePassword = (blur) => {
                 <label class="form-check-label" for="isAustralian">Australian Resident?</label>
               </div>
             </div>
-            <div class="col-md-6 col-sm-6">
-              <label for="gender" class="form-label">Gender</label>
-              <select class="form-select" id="gender" v-model="formData.gender" required>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+            
           </div>
           <div class="mb-3">
             <label for="reason" class="form-label">Reason for joining</label>
