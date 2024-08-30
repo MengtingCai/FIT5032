@@ -9,7 +9,8 @@ const formData = ref({
   confirmPassword: '',
   isAustralian: false,
   reason: '',
-  gender: ''
+  gender: '',
+  suburb: 'Clayton'
 })
 
 const submittedCards = ref([])
@@ -112,7 +113,7 @@ const validateReason = (blur) => {
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <h1 class="text-center">🗄️ W4. Library Registration Form</h1>
+        <h1 class="text-center">🗄️ W5. Library Registration Form</h1>
         <p class="text-center">
           This form now includes validation. Registered users are displayed in a data table below
           (PrimeVue).
@@ -194,7 +195,11 @@ const validateReason = (blur) => {
             <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
             <div v-if="errors.friendMessage" style="color: green;">{{ errors.friendMessage }}</div>
           </div>
-          <div class="text-center">
+          <div class="mb-3">
+            <label for="reason" class="form-label">Suburb</label>
+            <input type="text" class="form-control" id="suburb" v-bind:value="formData.suburb" />
+          </div>
+          <div class="text-center" style="margin-bottom: 500px;">
             <button type="submit" class="btn btn-primary me-2">Submit</button>
             <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
           </div>
@@ -237,7 +242,7 @@ const validateReason = (blur) => {
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 80vw;
@@ -271,4 +276,4 @@ const validateReason = (blur) => {
 .list-group-item {
   padding: 10px;
 }
-</style>
+</style> -->
