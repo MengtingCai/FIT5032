@@ -1,3 +1,14 @@
+<script setup>
+import { ifAuthenticate } from '../router/authentication'
+const { isAuthenticated }= ifAuthenticate()
+import router from '../router/index'
+
+const logout = () => {
+    isAuthenticated.value = false
+    alert("you are logout")
+    router.push({ name: 'Home' })
+}
+</script>
 <template>
   <!-- Using Bootstrap's Header template (starter code) -->
   <!-- https://getbootstrap.com/docs/5.0/examples/headers/ -->
@@ -7,12 +18,17 @@
       <ul class="nav nav-pills">
         <li class="nav-item">
           <router-link to="/" class="nav-link" active-class="active" aria-current="page"
-            >Home (Week 5)</router-link
-          >
+            >Home (Week 5)</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/about" class="nav-link" active-class="active">About</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" active-class="active"  @click="logout">Logout</button>
+          </li>
       </ul>
     </header>
   </div>

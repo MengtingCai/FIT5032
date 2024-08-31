@@ -85,6 +85,7 @@ import LibraryRegistrationForm from './views/HomeView.vue'
 }
 
 .page-content h1 {
+  text-align: center;
   color: black;
 }
 
