@@ -8,19 +8,26 @@
 <script setup>
 import { ref } from "vue"
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
-import {useAuth} from "vue-router"
+import {useRouter} from "vue-router"
 const email = ref("")
 const password = ref("")
 const router = useRouter()
 const auth = getAuth()
+const adminEmail = "admin@admin.com"
 const signin = () => {
     signInWithEmailAndPassword(getAuth(), email.value,password.value)
     .then((data) =>{
-        console.log("Firebase Register Successful!")
+        if(data == adminEmail)
+        {
+            alert("you have signed in as admin.")
+        }else{
+            alert("Login Successful!")
+        }
         router.push("/")
         console.log(auth.currentUser)
     }).catch((error) =>{
         console.log(error.code)
+        alert("Login failed!")
     })
 }
 </script>

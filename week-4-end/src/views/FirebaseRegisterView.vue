@@ -1,8 +1,10 @@
 <template>
-    <h1>Create an Account</h1>
-    <p><input type="text" placeholder="Email" v-model = "email"/> </p>
-    <p><input type="password" placeholder="Password" v-model="password" /></p>
-    <p><button @click="register">Ssve to Firebase</button></p>
+    <div class="center-container">
+        <h1>Create an Account</h1>
+        <p><input type="text" placeholder="Email" v-model = "email"/> </p>
+        <p><input type="password" placeholder="Password" v-model="password" /></p>
+        <p><button @click="register">Save to Firebase</button></p>
+    </div>
 </template>
 
 <script setup>
@@ -16,6 +18,7 @@ const auth = getAuth()
 const register = () => {
     createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((data) =>{
+        console.log("data", data)
         console.log("Firebase Register Successful!")
         router.push("/FireLogin")
     }).catch((error) =>{
@@ -23,3 +26,13 @@ const register = () => {
     })
 }
 </script>
+
+<style scoped>
+.center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+</style>

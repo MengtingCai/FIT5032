@@ -2,11 +2,35 @@
 import { ifAuthenticate } from '../router/authentication'
 const { isAuthenticated }= ifAuthenticate()
 import router from '../router/index'
+import { getAuth, signOut } from 'firebase/auth'
 
 const logout = () => {
     isAuthenticated.value = false
     alert("you are logout")
     router.push({ name: 'Home' })
+}
+
+const auth = getAuth()
+const firebaseLogout = () =>{
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    console.log('Current User:', {
+      email: currentUser.email,
+      uid: currentUser.uid,
+      displayName: currentUser.displayName,
+    });
+    alert("signOut successful")
+  } else {
+    console.log('No user is currently logged in.');
+  }
+  signOut(auth)
+    .then(() => {
+      console.log('User signed out successfully.');
+      router.push('/login'); 
+    })
+    .catch((error) => {
+      console.log('Sign-out error:', error);
+    });
 }
 </script>
 <template>
@@ -26,11 +50,17 @@ const logout = () => {
         <li class="nav-item">
           <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="isAuthenticated">
           <button class="nav-link" active-class="active"  @click="logout">Logout</button>
         </li>
         <li class="nav-item">
-          <router-link to="/Firelogin" class="nav-link" active-class="active">Firebase Login</router-link>
+          <router-link to="/FireLogin" class="nav-link" active-class="active">Firebase Login</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/FireRegister" class="nav-link" active-class="active">Firebase Register</router-link>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" active-class="active"  @click="firebaseLogout">Firebase Logout</button>
         </li>
       </ul>
     </header>
