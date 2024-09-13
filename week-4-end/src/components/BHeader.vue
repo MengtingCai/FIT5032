@@ -62,6 +62,12 @@ const firebaseLogout = () =>{
         <li class="nav-item">
           <button class="nav-link" active-class="active"  @click="firebaseLogout">Firebase Logout</button>
         </li>
+        <li class="nav-item">
+          <button class="nav-link" active-class="active"  @click="firebaseLogout">Firebase Logout</button>
+        </li>
+        <li class="nav-item">
+          <router-link to="/addBook" class="nav-link" active-class="active">Add Book</router-link>
+        </li>
       </ul>
     </header>
   </div>

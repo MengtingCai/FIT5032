@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import { ifAuthenticate } from '../router/authentication'
 import FirebaseSigninView from '@/views/FirebaseSigninView.vue'
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
+import AddBookView from '@/views/AddBookView.vue'
 
 const { isAuthenticated }= ifAuthenticate()
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/FireRegister',
         name: 'FireRegister',
         component: FirebaseRegisterView
+    },
+    {
+        path: '/addBook',
+        name: 'AddBook',
+        component: AddBookView
     }
 ]
 
