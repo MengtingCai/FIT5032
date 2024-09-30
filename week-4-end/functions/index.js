@@ -40,6 +40,32 @@ exports.capitalizeBookName = functions.firestore
       return snap.ref.set({name: capitalizedName}, {merge: true});
     });
 
+exports.getAllBooks = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+
+      // Create an array to store all the book information
+      const books = [];
+
+      // Loop through each document and push its data to the array
+      snapshot.forEach((doc) => {
+        books.push({
+          id: doc.id, // You can include the document ID if needed
+          ...doc.data(), // Spread the document data
+        });
+      });
+
+      // Send the array of books as a response
+      res.status(200).send(books);
+    } catch (error) {
+      console.error("Error fetching books:", error.message);
+      res.status(500).send("Error fetching books");
+    }
+  });
+});
+
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
